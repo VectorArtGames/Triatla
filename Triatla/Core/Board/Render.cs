@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Triatla.Core.Board.Data;
+using Triatla.Core.Credits;
 using Triatla.Core.Handlers;
 using Triatla.Core.Managers;
 using static System.Console;
@@ -80,7 +81,7 @@ namespace Triatla.Core.Board
 
                 BoardData.Winner = win;
 
-                RenderBoard();
+                //RenderBoard();
             };
 
             BoardData.OnPlaceChanged += (s, g) =>
@@ -90,14 +91,16 @@ namespace Triatla.Core.Board
                 {
 
 	                var c = state.StateChar;
-	                if (HighestScoreData.Data.ContainsKey(c))
+	                if (HighestScoreData.Data.ContainsKey(c) && HighestScoreData.Data[c] is HighestScoreData score)
 	                {
-		                var d = new HighestScoreData
+                        if (score.Score > i) return;
+
+                        var temp_d = new HighestScoreData
 		                {
                             Score = i,
                             Character = state
 		                };
-		                HighestScoreData.Data[c] = d;
+		                HighestScoreData.Data[c] = temp_d;
 	                }
 
 
@@ -110,6 +113,7 @@ namespace Triatla.Core.Board
 
                 RenderBoard();
             };
+
             // Invoke callback
             callback?.Invoke();
         }
@@ -117,7 +121,7 @@ namespace Triatla.Core.Board
         /// <summary>
         /// Render board of Triatla
         /// </summary>
-        private static void RenderBoard()
+        private static async void RenderBoard()
         {
 	        // Disable cursor - Selection
 	        CursorVisible = false;
@@ -125,19 +129,24 @@ namespace Triatla.Core.Board
             var data = BoardData.Data;
             if (BoardData.Winner != null)
             {
+	            MoveHandler.MoveKeysEnabled = false;
 	            var win = BoardData.Winner;
+
 	            Clear();
 	            ForegroundColor = ConsoleColor.Green;
 	            WriteLine($"Player: '{win.Winner.StateChar}' Wins!\nCongratulations!");
-	            MoveHandler.MoveKeysEnabled = false;
-	            return;
+                await Task.Delay(2000);
+                await CreditsRender.CallCreditsRoll();
+                return;
             }
             else if (data.IsFilled())
             {
+                MoveHandler.MoveKeysEnabled = false;
                 Clear();
                 WriteLine("Nobody Wins!");
-                MoveHandler.MoveKeysEnabled = false;
-	            return;
+                await Task.Delay(2000);
+                await CreditsRender.CallCreditsRoll();
+                return;
             }
 
             for (var i = 0; i < data.GetLength(0); i++)
@@ -147,7 +156,7 @@ namespace Triatla.Core.Board
                     var dat = data[i, j];
                     lock (Out)
                     {
-                        ForegroundColor = dat != null ? (dat.IsSelected ? (BoardData.CurrentState == PlayerState.Circle ? ConsoleColor.Green : ConsoleColor.Yellow) : ConsoleColor.Red) : ConsoleColor.Yellow;
+                        ForegroundColor = dat != null ? (dat.IsSelected ? (BoardData.CurrentState == PlayerState.Circle ? ConsoleColor.Green : ConsoleColor.Yellow) : (dat.GetState != PlayerState.None ? (dat.GetState == PlayerState.Circle ? ColorData.Team1Color : ColorData.Team2Color) : ConsoleColor.Red)) : ConsoleColor.Yellow;
                         
                         var b = $"[{dat?.StateChar ?? '?'}]";
                         CursorTop = i;

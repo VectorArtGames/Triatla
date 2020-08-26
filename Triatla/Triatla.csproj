@@ -45,9 +45,11 @@
   <ItemGroup>
     <Compile Include="Core\Board\Data\BDat.cs" />
     <Compile Include="Core\Board\Data\BoardData.cs" />
+    <Compile Include="Core\Board\Data\ColorData.cs" />
     <Compile Include="Core\Board\Data\HighestScoreData.cs" />
     <Compile Include="Core\Board\Data\WinnerData.cs" />
     <Compile Include="Core\Board\Render.cs" />
+    <Compile Include="Core\Credits\CreditsRender.cs" />
     <Compile Include="Core\Handlers\MoveHandler.cs" />
     <Compile Include="Core\Managers\TitleEditor.cs" />
     <Compile Include="Core\Math\Vector2.cs" />
