@@ -19,7 +19,7 @@ namespace Triatla.Core.Managers
 	    public static void RefreshTitle()
 	    {
 		    var dat = HighestScoreData.Data.OrderByDescending(x => x.Value.Score).FirstOrDefault().Value;
-            Debug.WriteLine(dat.IsAvailable);
+
 		    Title = $"Triatla | Winning: {(dat.IsAvailable ? $"'{dat.Character?.StateChar ?? '?'}' With {dat.Score}" : "N/A")} - Martin Magnusson";
         }
     }

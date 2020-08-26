@@ -95,12 +95,12 @@ namespace Triatla.Core.Board
 	                {
                         if (score.Score > i) return;
 
-                        var temp_d = new HighestScoreData
+                        var tempD = new HighestScoreData
 		                {
                             Score = i,
                             Character = state
 		                };
-		                HighestScoreData.Data[c] = temp_d;
+		                HighestScoreData.Data[c] = tempD;
 	                }
 
 
@@ -111,7 +111,9 @@ namespace Triatla.Core.Board
                     TitleEditor.RefreshTitle();
                 });
 
-                RenderBoard();
+                
+                if (!BoardData.Data.IsFilled())
+					RenderBoard();
             };
 
             // Invoke callback
@@ -136,16 +138,21 @@ namespace Triatla.Core.Board
 	            ForegroundColor = ConsoleColor.Green;
 	            WriteLine($"Player: '{win.Winner.StateChar}' Wins!\nCongratulations!");
                 await Task.Delay(2000);
+                Debug.WriteLine("CALL 1");
+
                 await CreditsRender.CallCreditsRoll();
                 return;
             }
-            else if (data.IsFilled())
+
+            if (BoardData.Winner == null && data.IsFilled())
             {
-                MoveHandler.MoveKeysEnabled = false;
-                Clear();
-                WriteLine("Nobody Wins!");
-                await Task.Delay(2000);
-                await CreditsRender.CallCreditsRoll();
+	            MoveHandler.MoveKeysEnabled = false;
+	            Clear();
+	            WriteLine("Nobody Wins!");
+	            await Task.Delay(2000);
+				Debug.WriteLine("CALL 2");
+
+				await CreditsRender.CallCreditsRoll();
                 return;
             }
 

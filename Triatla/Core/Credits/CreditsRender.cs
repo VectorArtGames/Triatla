@@ -19,22 +19,21 @@ namespace Triatla.Core.Credits
 			return !IsAnimating && !HasPlayedCredits && await RollCredits();
 		}
 
-		private static Credit[] Names = new[]
-		{
+		private static Credit[] Names = {
 			new Credit
 			{
-				text = "Programmer: Martin Magnusson",
-				color = ConsoleColor.Green
+				Text = "Programmer: Martin Magnusson",
+				Color = ConsoleColor.Green
 			},
 			new Credit
 			{
-				text = "The rest ..",
-				color = ConsoleColor.Yellow
+				Text = "The rest ..",
+				Color = ConsoleColor.Yellow
             },
 			new Credit
             {
-				text = "Ett skolprojekt för Ädelfors Folkhögskola",
-				color = ConsoleColor.Magenta
+				Text = "Ett skolprojekt för Ädelfors Folkhögskola",
+				Color = ConsoleColor.Magenta
             }
 		};
 
@@ -44,11 +43,11 @@ namespace Triatla.Core.Credits
 			{
 				CursorTop = 0;
 				MoveBufferArea(0, 0, BufferWidth, BufferHeight, 0, 1);
-				foreach (var c in name.text)
+				foreach (var c in name.Text)
 				{
 					lock (Out)
                     {
-						ForegroundColor = name.color;
+						ForegroundColor = name.Color;
 						Write(c);
 						ResetColor();
 					}
@@ -72,7 +71,7 @@ namespace Triatla.Core.Credits
 
 	public struct Credit
     {
-		public string text;
-		public ConsoleColor color;
+		public string Text;
+		public ConsoleColor Color;
     }
 }
