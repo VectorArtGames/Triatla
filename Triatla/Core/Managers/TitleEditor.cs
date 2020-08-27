@@ -22,5 +22,10 @@ namespace Triatla.Core.Managers
 
 		    Title = $"Triatla | Winning: {(dat.IsAvailable ? $"'{dat.Character?.StateChar ?? '?'}' With {dat.Score}" : "N/A")} - Martin Magnusson";
         }
+
+	    public static void EndTitle()
+	    {
+		    Title = "Triatla | Thank you for Playing - Martin Magnusson";
+	    }
     }
 }

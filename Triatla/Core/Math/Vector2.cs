@@ -8,7 +8,7 @@ namespace Triatla.Core.Math
 {
 	public class Vector2
 	{
-		public event EventHandler OnVectorChange;
+		public event EventHandler<Vector2> OnVectorChange;
 
 		public Vector2(int x, int y)
 		{
@@ -46,7 +46,7 @@ namespace Triatla.Core.Math
 		#region EVENT_CALLS
 
 		protected void CallVectorChange() =>
-			OnVectorChange?.Invoke(this, EventArgs.Empty);
+			OnVectorChange?.Invoke(this, this);
 
 		#endregion
 
