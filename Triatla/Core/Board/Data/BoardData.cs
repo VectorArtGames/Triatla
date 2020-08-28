@@ -141,6 +141,54 @@ namespace Triatla.Core.Board.Data
 						total++;
 	                }
                     break;
+				case ScanDirection.DiagLeftDown:
+					for (var i = 0; i < length; i++)
+					{
+						// Take bounds into consideration
+						if (0 > s.X - i || 0 > s.Y - i) continue;
+
+
+						var next = data[s.Y - i, s.X - i];
+						if (next.StateChar != start.StateChar) break;
+						total++;
+					}
+					break;
+				case ScanDirection.DiagLeftUp:
+					for (var i = 0; i < length; i++)
+					{
+						// Take bounds into consideration
+						if (maxSizeY <= s.Y + i || 0 > s.X - i) continue;
+
+
+						var next = data[s.Y + i, s.X - i];
+						if (next.StateChar != start.StateChar) break;
+						total++;
+					}
+					break;
+				case ScanDirection.DiagRightDown:
+					for (var i = 0; i < length; i++)
+					{
+						// Take bounds into consideration
+						if (0 > s.Y - i || maxSizeX <= s.X + i) continue;
+
+
+						var next = data[s.Y - i, s.X + i];
+						if (next.StateChar != start.StateChar) break;
+						total++;
+					}
+					break;
+				case ScanDirection.DiagRightUp:
+					for (var i = 0; i < length; i++)
+					{
+						// Take bounds into consideration
+						if (maxSizeY <= s.Y + i || maxSizeX <= s.X + i) continue;
+
+
+						var next = data[s.Y + i, s.X + i];
+						if (next.StateChar != start.StateChar) break;
+						total++;
+					}
+					break;
 	        }
 
 	        return total;
@@ -152,6 +200,10 @@ namespace Triatla.Core.Board.Data
             Left,
             Up,
             Down,
+			DiagLeftUp,
+			DiagLeftDown,
+			DiagRightUp,
+			DiagRightDown
         }
     }
 

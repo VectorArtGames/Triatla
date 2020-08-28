@@ -51,6 +51,7 @@
     <Compile Include="Core\Board\Render.cs" />
     <Compile Include="Core\Credits\CreditsRender.cs" />
     <Compile Include="Core\Handlers\MoveHandler.cs" />
+    <Compile Include="Core\Managers\Notification.cs" />
     <Compile Include="Core\Managers\TitleEditor.cs" />
     <Compile Include="Core\Math\Vector2.cs" />
     <Compile Include="Program.cs" />
