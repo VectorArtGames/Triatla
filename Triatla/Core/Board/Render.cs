@@ -138,8 +138,6 @@ namespace Triatla.Core.Board
 	            ForegroundColor = ConsoleColor.Green;
 	            WriteLine($"Player: '{win.Winner.StateChar}' Wins!\nCongratulations!");
                 await Task.Delay(2000);
-                Debug.WriteLine("CALL 1");
-
                 await CreditsRender.CallCreditsRoll();
                 return;
             }
